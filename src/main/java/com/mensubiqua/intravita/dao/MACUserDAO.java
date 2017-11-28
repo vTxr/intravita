@@ -4,5 +4,5 @@ import com.mensubiqua.intravita.model.MACUser;
 
 public interface MACUserDAO {
 	public void insert(MACUser mac);
-    public MACUser find(String id);
+    public boolean find(String user, String mac);
 }
