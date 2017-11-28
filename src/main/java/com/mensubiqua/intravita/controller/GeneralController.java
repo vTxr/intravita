@@ -60,7 +60,7 @@ public class GeneralController {
 	
 	MACUserDAOImpl userMACDAO;
 	
-	private String url_heroku = "https://intravita.herokuapp.com";
+	private String url_heroku = "https://intravita-mant-equipo03.herokuapp.com";
 	
     @RequestMapping({"/default**","/"})
     public ModelAndView defaultAfterLogin(HttpSession sesion, HttpServletRequest request) {
