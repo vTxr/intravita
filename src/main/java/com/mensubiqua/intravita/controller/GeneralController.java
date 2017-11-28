@@ -58,7 +58,7 @@ public class GeneralController {
 	@Autowired
 	SolicitudDAOImpl solicitudDAO;
 	
-	MACUserDAOImpl userMACDAO;
+	
 	
 	private String url_heroku = "https://intravita-mant-equipo03.herokuapp.com";
 	
@@ -218,6 +218,7 @@ public class GeneralController {
             
             //mac
             MACUser macUser = new MACUser(user.getNickname());
+            MACUserDAOImpl userMACDAO = new MACUserDAOImpl();
             userMACDAO.insert(macUser);
             
             request.getSession().setAttribute("mensaje2", "");
