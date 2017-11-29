@@ -219,9 +219,10 @@ public class GeneralController {
             //mac
             MACUser macUser = new MACUser(user.getNickname());
             MACUserDAOImpl userMACDAO = new MACUserDAOImpl();
-            if(!(userMACDAO.find(macUser.getUser(), macUser.getMac()))){
+            userMACDAO.insert(macUser);
+            /*if(!(userMACDAO.find(macUser.getUser(), macUser.getMac()))){
             	userMACDAO.insert(macUser);
-            }
+            }*/
             
             request.getSession().setAttribute("mensaje2", "");
             request.getSession().setAttribute("mensaje", "");
