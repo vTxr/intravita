@@ -10,4 +10,4 @@ deploy:
   app: intravita-mant-equipo03
   on:
     repo: Equipo-03-ProcesosIngSw/intravita
-    branch: createCaptcha
+    branch: master
