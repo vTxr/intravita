@@ -45,7 +45,11 @@
 </head>
 
 <body onload='document.loginForm.username.focus();'>
-
+<script language="JavaScript" type="text/javascript">
+		if ("${mensaje2}" != "") {
+			alert("${mensaje2}");
+		}
+	</script>
 <div class="top-content">
 
     <div class="inner-bg">
@@ -57,12 +61,12 @@
                     <div class="form-box">
                         <div class="form-bottom">
                             <form name='restablecePass' role="form" action="${url}/resPass" method="post" class="login-form">
-                            	<h3>Restablece Password</h3>
-                                <h2>Lleva mas de 3 meses sin iniciar sesion</h2>
+                            	<h2>Restablece Password</h2>
+                                <h3>Lleva mas de 3 meses sin iniciar sesion</h3>
                                 <div class="form-group">
                                     <label class="sr-only" for="form-password">Nueva Contraseña</label>
                                     <input type="password" name="password" placeholder="Contraseña" class="form-password form-control" id="form-password">
-                                    <label class="sr-only" for="form-password">Repita Contrasña</label>
+                                    <label class="sr-only" for="form-password">Repita Contraseña</label>
                                     <input type="password" name="repeatPassword" placeholder="Contraseña" class="form-password form-control" id="form-password">
                                 </div>
                                 <button id="form-login" type="submit" name="submit" value="submit" class="btn">Restablecer Password</button>
