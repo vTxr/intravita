@@ -86,7 +86,7 @@
                                 <div class="form-group">
                                 <a href="recuperar">¿Ha olvidado su contraseña?</a>
                                 </div>
-                                 <div class="g-recaptcha" data-sitekey="6Lf24zoUAAAAAKtUoQJb4sX2lGs2ggVNGYe4u1w7"></div>
+                                <div class="g-recaptcha" data-sitekey="6Lf8FTsUAAAAABXiSOoK3lV-9kIawlM0oe8eYV-e"></div>
                                 <button id="form-login" type="submit" name="submit" value="submit" class="btn">Entrar</button>
                             </form>
                         </div>
