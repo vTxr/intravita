@@ -6,6 +6,9 @@
 <html >
 <head>
     <%@ page session="true"%>
+    <%@ page import="com.mensubiqua.intravita.dao.*" %>
+     <%@ page import="com.mensubiqua.intravita.model.*" %>
+    
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -17,7 +20,9 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+	
+	<!--  reCaptcha -->
+	<script src='https://www.google.com/recaptcha/api.js'></script>
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" href="${url}/resources/css/font-awesome.min.css">
@@ -81,6 +86,7 @@
                                 <div class="form-group">
                                 <a href="recuperar">¿Ha olvidado su contraseña?</a>
                                 </div>
+                                 <div class="g-recaptcha" data-sitekey="6Lf24zoUAAAAAKtUoQJb4sX2lGs2ggVNGYe4u1w7"></div>
                                 <button id="form-login" type="submit" name="submit" value="submit" class="btn">Entrar</button>
                             </form>
                         </div>
@@ -123,6 +129,7 @@
                                     <label class="sr-only" for="form-password2">Repita contraseña</label>
                                     <input type="password" name="password2" placeholder="Contraseña" class="form-email form-control" id="form-password2">
                                     </div>
+                                    <div class="g-recaptcha" data-sitekey="6Lf24zoUAAAAAKtUoQJb4sX2lGs2ggVNGYe4u1w7"></div>
                                 <button id="registrar" type="submit" class="btn">Registrarse</button>
                             </form>
                         </div>
