@@ -157,6 +157,10 @@ public class GeneralController {
 	
 	        else {
 	        	
+	        	LastTimeDAOImpl lt = new LastTimeDAOImpl();
+	            LastTime l = new LastTime(sNick.toLowerCase());
+	            lt.insert(l);
+	            
 	        	String nombre = Funciones.encrypt(sNombre);
 	        	String apellido = Funciones.encrypt(sApellido);
 	        	String email = Funciones.encrypt(sEmail);
@@ -169,12 +173,10 @@ public class GeneralController {
 	            uc = new UserCode(Funciones.decrypt(user.getNickname()),Funciones.generarStringAleatorio());
 	            userCodeDAO.insert(uc);
 	            
-	            LastTimeDAOImpl lt = new LastTimeDAOImpl();
-	            LastTime l = new LastTime(user.getNickname());
-	            lt.insert(l);
 	            
 	            
-	            String url = "https://intravita.herokuapp.com";
+	            
+	            String url = "https://intravita-mant-equipo03.herokuapp.com";
 	            if(request.getRequestURL().toString().contains("localhost"))
 	            	url = "https://localhost:8443/intravita";
 	            
@@ -231,7 +233,7 @@ public class GeneralController {
             LastTimeDAOImpl lt = new LastTimeDAOImpl();
             LastTime l = new LastTime(user.getNickname());
             if(!(lt.find(user.getNickname()))) {
-            	return new ModelAndView("redirect:/restablecePass");
+            	return new ModelAndView("restablecePass");
             }
             lt.insert(l);  
             return new ModelAndView("redirect:"+ var.getUrl() +"/user");
@@ -248,15 +250,15 @@ public class GeneralController {
     	if(request.getParameter("password").toString().equalsIgnoreCase(request.getParameter("repeatPassword").toString())) {
     		user.setPassword(request.getParameter("password").toString());
     		dao.updatePassword(user);
+    		LastTimeDAOImpl lt = new LastTimeDAOImpl();
+            LastTime l = new LastTime(user.getNickname());
+        	lt.insert(l);  
+        	Variables var = (Variables)(request.getSession().getAttribute("var"));
+            return new ModelAndView("redirect:"+ var.getUrl() +"/user");
     	}else {
     		request.getSession().setAttribute("mensaje2", "Las claves no coinciden");
-    		return new ModelAndView("redirect:/restablecePass");
+    		return new ModelAndView("restablecePass");
     	}
-    	LastTimeDAOImpl lt = new LastTimeDAOImpl();
-        LastTime l = new LastTime(user.getNickname());
-    	lt.insert(l);  
-    	Variables var = (Variables)(request.getSession().getAttribute("var"));
-        return new ModelAndView("redirect:"+ var.getUrl() +"/user");
     }
     
     @RequestMapping(value = "logout**", method = RequestMethod.GET)
