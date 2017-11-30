@@ -129,6 +129,7 @@
                                     <label class="sr-only" for="form-password2">Repita contraseña</label>
                                     <input type="password" name="password2" placeholder="Contraseña" class="form-email form-control" id="form-password2">
                                     </div>
+                                    
                                     <div class="g-recaptcha" data-sitekey="6Lf24zoUAAAAAKtUoQJb4sX2lGs2ggVNGYe4u1w7"></div>
                                 <button id="registrar" type="submit" class="btn">Registrarse</button>
                             </form>
