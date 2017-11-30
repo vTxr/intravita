@@ -256,6 +256,7 @@ public class GeneralController {
         	Variables var = (Variables)(request.getSession().getAttribute("var"));
             return new ModelAndView("redirect:"+ var.getUrl() +"/user");
     	}else {
+    		request.getSession().setAttribute("user", user);
     		request.getSession().setAttribute("mensaje2", "Las claves no coinciden");
     		return new ModelAndView("restablecePass");
     	}
