@@ -6,6 +6,9 @@
 <html >
 <head>
     <%@ page session="true"%>
+    <%@ page import="com.mensubiqua.intravita.dao.*" %>
+     <%@ page import="com.mensubiqua.intravita.model.*" %>
+    
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -83,6 +86,7 @@
                                 <div class="form-group">
                                 <a href="recuperar">¿Ha olvidado su contraseña?</a>
                                 </div>
+                                 <div class="g-recaptcha" data-sitekey="6Lf24zoUAAAAAKtUoQJb4sX2lGs2ggVNGYe4u1w7"></div>
                                 <button id="form-login" type="submit" name="submit" value="submit" class="btn">Entrar</button>
                             </form>
                         </div>
