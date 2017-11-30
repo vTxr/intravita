@@ -248,7 +248,7 @@ public class GeneralController {
     	User user = (User)request.getSession().getAttribute("user");
     	UserDAOImpl dao = new UserDAOImpl();
     	if(request.getParameter("password").toString().equalsIgnoreCase(request.getParameter("repeatPassword").toString())) {
-    		user.setPassword(request.getParameter("password").toString());
+    		user.setPassword(Funciones.encrypt_md5(request.getParameter("password").toString()));
     		dao.updatePassword(user);
     		LastTimeDAOImpl lt = new LastTimeDAOImpl();
             LastTime l = new LastTime(user.getNickname());
