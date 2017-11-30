@@ -22,11 +22,13 @@ import com.mensubiqua.intravita.auxiliar.Funciones;
 import com.mensubiqua.intravita.auxiliar.MailSender;
 import com.mensubiqua.intravita.auxiliar.Variables;
 import com.mensubiqua.intravita.dao.LastTimeDAOImpl;
+import com.mensubiqua.intravita.dao.MACUserDAOImpl;
 import com.mensubiqua.intravita.dao.PublicacionDAOImpl;
 import com.mensubiqua.intravita.dao.SolicitudDAOImpl;
 import com.mensubiqua.intravita.dao.UserCodeDAOImpl;
 import com.mensubiqua.intravita.dao.UserDAOImpl;
 import com.mensubiqua.intravita.model.LastTime;
+import com.mensubiqua.intravita.model.MACUser;
 import com.mensubiqua.intravita.model.Solicitud;
 import com.mensubiqua.intravita.model.User;
 import com.mensubiqua.intravita.model.UserCode;
@@ -58,7 +60,9 @@ public class GeneralController {
 	@Autowired
 	SolicitudDAOImpl solicitudDAO;
 	
-	private String url_heroku = "https://intravita.herokuapp.com";
+	
+	
+	private String url_heroku = "https://intravita-mant-equipo03.herokuapp.com";
 	
     @RequestMapping({"/default**","/"})
     public ModelAndView defaultAfterLogin(HttpSession sesion, HttpServletRequest request) {
@@ -221,6 +225,13 @@ public class GeneralController {
             	user.setFoto("user");
             }
             
+            //mac
+            MACUser macUser = new MACUser(user.getNickname());
+            MACUserDAOImpl userMACDAO = new MACUserDAOImpl();
+            if(!(userMACDAO.find(macUser.getMac()))){
+            	userMACDAO.insert(macUser);
+            }
+         
             
             request.getSession().setAttribute("mensaje2", "");
             request.getSession().setAttribute("mensaje", "");
