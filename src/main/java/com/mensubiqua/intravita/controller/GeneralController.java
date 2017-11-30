@@ -21,10 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mensubiqua.intravita.auxiliar.Funciones;
 import com.mensubiqua.intravita.auxiliar.MailSender;
 import com.mensubiqua.intravita.auxiliar.Variables;
+import com.mensubiqua.intravita.dao.LastTimeDAOImpl;
 import com.mensubiqua.intravita.dao.PublicacionDAOImpl;
 import com.mensubiqua.intravita.dao.SolicitudDAOImpl;
 import com.mensubiqua.intravita.dao.UserCodeDAOImpl;
 import com.mensubiqua.intravita.dao.UserDAOImpl;
+import com.mensubiqua.intravita.model.LastTime;
 import com.mensubiqua.intravita.model.Solicitud;
 import com.mensubiqua.intravita.model.User;
 import com.mensubiqua.intravita.model.UserCode;
@@ -167,6 +169,11 @@ public class GeneralController {
 	            uc = new UserCode(Funciones.decrypt(user.getNickname()),Funciones.generarStringAleatorio());
 	            userCodeDAO.insert(uc);
 	            
+	            LastTimeDAOImpl lt = new LastTimeDAOImpl();
+	            LastTime l = new LastTime(user.getNickname());
+	            lt.insert(l);
+	            
+	            
 	            String url = "https://intravita.herokuapp.com";
 	            if(request.getRequestURL().toString().contains("localhost"))
 	            	url = "https://localhost:8443/intravita";
@@ -212,16 +219,44 @@ public class GeneralController {
             	user.setFoto("user");
             }
             
+            
             request.getSession().setAttribute("mensaje2", "");
             request.getSession().setAttribute("mensaje", "");
             if(local)
             	return new ModelAndView("redirect:/user");
             
+            
+            
+          //CheckRegister
+            LastTimeDAOImpl lt = new LastTimeDAOImpl();
+            LastTime l = new LastTime(user.getNickname());
+            if(!(lt.find(user.getNickname()))) {
+            	return new ModelAndView("redirect:/restablecePass");
+            }
+            lt.insert(l);  
             return new ModelAndView("redirect:"+ var.getUrl() +"/user");
         }
 
         return new ModelAndView("redirect:/login");
         
+    }
+    
+    @RequestMapping(value = "resPass**", method = RequestMethod.POST)
+    public ModelAndView resPass(HttpServletRequest request)  {
+    	User user = (User)request.getSession().getAttribute("user");
+    	UserDAOImpl dao = new UserDAOImpl();
+    	if(request.getParameter("password").toString().equalsIgnoreCase(request.getParameter("repeatPassword").toString())) {
+    		user.setPassword(request.getParameter("password").toString());
+    		dao.updatePassword(user);
+    	}else {
+    		request.getSession().setAttribute("mensaje2", "Las claves no coinciden");
+    		return new ModelAndView("redirect:/restablecePass");
+    	}
+    	LastTimeDAOImpl lt = new LastTimeDAOImpl();
+        LastTime l = new LastTime(user.getNickname());
+    	lt.insert(l);  
+    	Variables var = (Variables)(request.getSession().getAttribute("var"));
+        return new ModelAndView("redirect:"+ var.getUrl() +"/user");
     }
     
     @RequestMapping(value = "logout**", method = RequestMethod.GET)
