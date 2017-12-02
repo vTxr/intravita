@@ -2,31 +2,22 @@ package com.mensubiqua.intravita.model;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.util.Date;
 
-public class MACUser {
-	String mac;
-	String fecha;
-	public MACUser() {
-		obtenFecha();
+public class Mac {
+	String mac;	
+	
+	public Mac() {
 		obtenMac();
 	}
-	public MACUser(String mac) {
-		obtenFecha();
-		setMac(mac);
-	}
-	public String getFecha() {
-		return this.fecha;
-	}
-	private void obtenFecha() {
-		this.fecha = new Date().toString();
-	}
-	public String getMac() {
-		return mac;
-	}
-	public void setMac(String mac) {
+	
+	protected void setMac(String mac) {
 		this.mac = mac;
 	}
+	
+	public String getMac() {
+		return this.mac;
+	}
+	
 	private void obtenMac() {
 		try {
 			InetAddress ip = InetAddress.getLocalHost();
