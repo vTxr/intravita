@@ -1,8 +1,5 @@
 package selenium;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import seleniumAux.Driver;
@@ -19,7 +16,7 @@ public class LoginUsuarioIncorrecto {
         GeneralAux.redirect(root, "/login");
         GeneralAux.login("falso", "false", "Este usuario no existe");
                 
-        driver.quit();
+        driver.close();
         
     }
     

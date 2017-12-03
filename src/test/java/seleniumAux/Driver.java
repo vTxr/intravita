@@ -5,32 +5,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Driver {
 	private static WebDriver driver = null;
-	private static String root = "https://localhost:8443/intravita";
-    /*public static void main(String[] args) {
-    	String root = "https://localhost:8443/intravita";
+	private static String root = "https://intravita-mant-equipo03.herokuapp.com";
 
-        if(System.getProperty("os.name").equals("Linux"))
-            System.setProperty("webdriver.gecko.driver", "lib/geckodriver");
-        else
-            System.setProperty("webdriver.gecko.driver", "lib/geckodriver.exe");
-
-        driver = new FirefoxDriver();
-
-        //LoginWebTests.run(root);
-        GeneralWebTests.run(root);
-
-        driver.quit();
-
-    }*/
 
     public static WebDriver getDriver()
     {
     	if (Driver.driver == null)
     	{
-    		if(System.getProperty("os.name").equals("Linux"))
-                System.setProperty("webdriver.gecko.driver", "lib/geckodriver");
-            else
-                System.setProperty("webdriver.gecko.driver", "lib/geckodriver.exe");
+    		
+        System.setProperty("webdriver.gecko.driver", "lib/geckodriver");
 
     		Driver.driver = new FirefoxDriver();
 

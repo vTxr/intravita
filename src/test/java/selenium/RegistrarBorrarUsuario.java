@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.mensubiqua.intravita.auxiliar.Funciones;
-import com.mensubiqua.intravita.auxiliar.Variables;
 import com.mensubiqua.intravita.dao.UserCodeDAOImpl;
 import com.mensubiqua.intravita.dao.UserDAOImpl;
 import com.mensubiqua.intravita.model.User;

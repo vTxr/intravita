@@ -7,67 +7,59 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class GeneralAux {
 	private static WebDriver driver = Driver.getDriver();
-    private static String root = Driver.getRoot();
-	
-	public static void login(String username, String pass, String msg_esperado)
-    {
-        driver.get(root);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.findElement(By.id("form-username")).sendKeys(username);
-        driver.findElement(By.id("form-password")).sendKeys(pass);
-        driver.findElement(By.id("form-login")).click();
-        
-        String msg;
-        try {
-        	msg = driver.findElement(By.id("msglogin")).getText();
-        } catch (Exception e) {
+	private static String root = Driver.getRoot();
+
+	public static void login(String username, String pass, String msg_esperado) {
+		driver.get(root);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.findElement(By.id("form-username")).sendKeys(username);
+		driver.findElement(By.id("form-password")).sendKeys(pass);
+		driver.findElement(By.id("form-login")).click();
+
+		String msg;
+		try {
+			msg = driver.findElement(By.id("msglogin")).getText();
+		} catch (Exception e) {
 			msg = "";
 		}
-        
-        if(msg.equals(msg_esperado))
-        	System.out.println("CORRECTO: " + msg);
-        else
-        	System.out.println("MENSAJE DE LOGIN INESPESRADO: " + msg);
-    }
-	
-	public static boolean redirect(String ruta, String contiene)
-    {
-    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(ruta);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        boolean correcto;
-        if(driver.getCurrentUrl().contains(contiene))
-        {
-        	System.out.println("CORRECTO: Redirección a " + contiene + " correcta");
-        	correcto = true;
-        	
-        }
-        else
-        {
-        	System.out.println("Fallo: Redirección a " + contiene + " fallada");
-        	correcto = false;
-        }
-        
-        return correcto;
-            
-    }
-	
-	public static void logout()
-    {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.findElement(By.id("menu_user")).click();
-        driver.findElement(By.id("logout")).click();
-        if(driver.getCurrentUrl().contains("/login"))
-        {
-        	System.out.println("CORRECTO: Logout correcto");
-        }
-        else {
-        	System.out.println("FALLO: Logout incorrecto");
-        }
-        
-    }
-    
-    public static void register(String nickname ,String name, String apellido, String email, String password)
+
+		if (msg.equals(msg_esperado))
+			System.out.println("CORRECTO: " + msg);
+		else
+			System.out.println("MENSAJE DE LOGIN INESPESRADO: " + msg);
+	}
+
+	public static boolean redirect(String ruta, String contiene) {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get(ruta);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		boolean correcto;
+		if (driver.getCurrentUrl().contains(contiene)) {
+			System.out.println("CORRECTO: Redirección a " + contiene + " correcta");
+			correcto = true;
+
+		} else {
+			System.out.println("Fallo: Redirección a " + contiene + " fallada");
+			correcto = false;
+		}
+
+		return correcto;
+
+	}
+
+	public static void logout() {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.findElement(By.id("menu_user")).click();
+		driver.findElement(By.id("logout")).click();
+		if (driver.getCurrentUrl().contains("/login")) {
+			System.out.println("CORRECTO: Logout correcto");
+		} else {
+			System.out.println("FALLO: Logout incorrecto");
+		}
+
+	}
+
+	public static void register(String nickname ,String name, String apellido, String email, String password)
     {
     	driver.get(root + "/default");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -86,7 +78,14 @@ public abstract class GeneralAux {
         else {
         	System.out.println("FALLO: Se ha registrado incorrectamente");
         }
-        
     }
+	public static void recuperar(String pass1, String pass2) {
+		driver.get(root);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.findElement(By.id("form-password")).sendKeys(pass1);
+		driver.findElement(By.id("form-password2")).sendKeys(pass2);
+		driver.findElement(By.id("form-login")).click();
+
+	}
 
 }
