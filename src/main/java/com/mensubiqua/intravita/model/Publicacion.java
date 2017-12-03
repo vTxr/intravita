@@ -1,5 +1,6 @@
 package com.mensubiqua.intravita.model;
 
+import java.io.File;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class Publicacion {
     private String texto;
     private String privacidad;
     private String fecha;
+    private String foto;
     
 	
 
@@ -28,7 +30,7 @@ public class Publicacion {
 		this.texto = texto;
 		this.privacidad = privacidad;
 		this.fecha = fecha;
-	}
+		}
 	
 	public Publicacion() {}
 	
@@ -71,8 +73,10 @@ public class Publicacion {
 		this.privacidad = privacidad;
 	}
 
+    public void setFoto(String foto) {this.foto = "resources" + File.separator + "img" + File.separator + foto +".jpg";}
 	
-	
-	
+	public String getFoto() {
+		return foto;
+	}
     
 }

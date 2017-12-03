@@ -8,6 +8,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,9 +34,13 @@ public class PublicacionDAOImpl implements PublicacionDAO{
         DBBroker.get().insertOne(p, COLLECTION);
     }
 
-    public void delete(String id) {
+    public void delete(String id, File foto) {
         DBBroker.get().deleteOne(ID, new ObjectId(id), COLLECTION);
         DBBroker.get().deleteMany("texto", "cp#"+id, COLLECTION);
+        
+        if(foto.exists() && !foto.isDirectory()) { 
+            foto.delete();
+        } 
     }
 
     public Publicacion find(String id) {
@@ -46,6 +51,7 @@ public class PublicacionDAOImpl implements PublicacionDAO{
         	p = new Publicacion(document.getString("nickname"), document.getString("texto"),
         		document.getString("privacidad"), document.getString("fecha"));
         	p.setId(document.getObjectId("_id").toString());
+        	p.setFoto(document.getString("foto"));
         }
         return p;
     }
@@ -58,6 +64,7 @@ public class PublicacionDAOImpl implements PublicacionDAO{
         	p = new Publicacion(document.getString("nickname"), document.getString("texto"),
         		document.getString("privacidad"), document.getString("fecha"));
         	p.setId(document.getObjectId("_id").toString());
+        	p.setFoto(document.getString("foto"));
         }
         return p;
     }
@@ -90,7 +97,7 @@ public class PublicacionDAOImpl implements PublicacionDAO{
 		return ps;
 	}
 	
-	public void update(Publicacion p) {			
+	public void update(Publicacion p) {		
 
 		BasicDBObject values = new BasicDBObject();
 		values.append("nickname", p.getNickname());
