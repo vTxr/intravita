@@ -1,5 +1,6 @@
 package selenium;
 
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import seleniumAux.Driver;
@@ -8,7 +9,8 @@ import seleniumAux.GeneralAux;
 public class LoginUsuarioIncorrecto {
 	private static WebDriver driver;
     private static String root;
-    public static void main(String[] args)
+    @Test
+    public static void loginUserIn()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();
@@ -16,7 +18,7 @@ public class LoginUsuarioIncorrecto {
         GeneralAux.redirect(root, "/login");
         GeneralAux.login("falso", "false", "Este usuario no existe");
                 
-        driver.close();
+  
         
     }
     

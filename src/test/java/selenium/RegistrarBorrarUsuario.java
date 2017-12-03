@@ -2,6 +2,7 @@ package selenium;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -16,7 +17,9 @@ import seleniumAux.GeneralAux;
 public class RegistrarBorrarUsuario {
 	private static WebDriver driver;
     private static String root;
-    public static void main(String[] args)
+    
+    @Test
+    public static void registraryborrar()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();

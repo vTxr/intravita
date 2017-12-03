@@ -1,5 +1,6 @@
 package selenium;
 
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import seleniumAux.Driver;
@@ -8,7 +9,8 @@ import seleniumAux.GeneralAux;
 public class LoginUsuarioPassIncorrecta {
 	private static WebDriver driver;
     private static String root;
-    public static void main(String[] args)
+    @Test
+    public static void loginpasswordin()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();
@@ -16,7 +18,6 @@ public class LoginUsuarioPassIncorrecta {
         GeneralAux.redirect(root, "/login");
         GeneralAux.login("super.admin", "false", "Contraseña incorrecta");
         
-        //driver.quit();
         
     }
 

@@ -1,5 +1,6 @@
 package selenium;
 
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
 import seleniumAux.Driver;
@@ -8,7 +9,8 @@ import seleniumAux.GeneralAux;
 public class LoginCorrecto {
 	private static WebDriver driver;
     private static String root;
-    public static void main(String[] args)
+    @Test
+    public static void logincorrecto()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();
