@@ -156,7 +156,11 @@ public class GeneralController {
 	
 	        else if (userDAO.find(Funciones.encrypt(request.getParameter("nickname"))) != null)
 	        	request.getSession().setAttribute("mensaje", "<strong style=\"color: red !important;\">Este usuario ya existe</strong>");
-	
+	        
+	        else if (userDAO.findMail(Funciones.encrypt(request.getParameter("email"))) != null)
+	        	request.getSession().setAttribute("mensaje", "<strong style=\"color: red !important;\">Este email ya esta en uso</strong>");
+
+	        
 	        else {
 	        	
 	        	String nombre = Funciones.encrypt(sNombre);

@@ -28,6 +28,7 @@ public class UserDAOImpl implements UserDAO{
 
     private final String COLLECTION = "users";
     private final String ID = "nickname";
+    private final String EMAIL = "email";
 
     public void insert(User user) {
         DBBroker.get().insertOne(user, COLLECTION);
@@ -48,6 +49,21 @@ public class UserDAOImpl implements UserDAO{
 
     public User find(String nickname) {
         Document document = DBBroker.get().find(ID, nickname, COLLECTION);
+        User user = null;
+
+        if (document != null){
+        	user = new User(Funciones.decrypt(document.getString("nombre")), Funciones.decrypt(document.getString("apellido")),
+        		Funciones.decrypt(document.getString("email")), document.getString("password"), document.getString("rol"),
+        		Funciones.decrypt(document.getString("nickname")), document.getBoolean("validado"));
+        	user.setFoto(document.getString("foto"));
+        	
+        
+        }
+        return user;
+    }
+    
+    public User findMail(String email) {
+        Document document = DBBroker.get().find(EMAIL, email, COLLECTION);
         User user = null;
 
         if (document != null){
