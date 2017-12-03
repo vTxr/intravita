@@ -10,7 +10,7 @@ public class LoginCorrecto {
 	private static WebDriver driver;
     private static String root;
     @Test
-    public static void logincorrecto()
+    public void logincorrecto()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();

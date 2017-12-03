@@ -11,7 +11,7 @@ public class LoginConRecuperar {
 	private static WebDriver driver;
     private static String root;
     @Test
-    public static void loginconrecuperar()
+    public  void loginconrecuperar()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();

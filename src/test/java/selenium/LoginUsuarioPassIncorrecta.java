@@ -10,7 +10,7 @@ public class LoginUsuarioPassIncorrecta {
 	private static WebDriver driver;
     private static String root;
     @Test
-    public static void loginpasswordin()
+    public  void loginpasswordin()
     {
     	root = Driver.getRoot();
         driver = Driver.getDriver();
