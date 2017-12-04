@@ -508,15 +508,18 @@ public class UserController {
     	
     	if(!solicitudDAO.isPendiente(user.getNickname(), solicitado) && 
     			!solicitudDAO.isPendiente(solicitado, user.getNickname())) {
-        	solicitudDAO.insert(solicitud);    		
-    	}  	    	
-    		
-		Variables v = (Variables) session.getAttribute("var");
-		v.setCont(0);
-		v.setMensaje("Solicitud enviada");
-		v.setTipo("info");
+        	solicitudDAO.insert(solicitud);
+    		Variables v = (Variables) session.getAttribute("var");
+    		v.setCont(0);
+    		v.setMensaje("Solicitud enviada");
+    		v.setTipo("info");
+    	}else {
+    		Variables v = (Variables) session.getAttribute("var");
+    		v.setCont(0);
+    		v.setMensaje("Existe una solicitud previa");
+    		v.setTipo("info");
+    	}
 	    	
-
         return new ModelAndView("redirect:/user");
     }
 	
