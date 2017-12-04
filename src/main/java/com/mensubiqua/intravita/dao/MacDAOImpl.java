@@ -8,6 +8,7 @@ public class MacDAOImpl {
 	private final String COLLECTION = "mac";
 	
 	public void insert(Mac mac) {
+		DBBroker.get().delete("mac", mac.getMac(), COLLECTION);
         DBBroker.get().insertOne(mac, COLLECTION);
     }
 	
@@ -16,6 +17,7 @@ public class MacDAOImpl {
 
         if (document != null){
         	if(document.get("mac").toString().equalsIgnoreCase("mac")) {
+        		 DBBroker.get().insertOne(mac, COLLECTION);
         		return true;
         	}        
         }

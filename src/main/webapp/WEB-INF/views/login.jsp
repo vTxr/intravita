@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ page import="com.mensubiqua.intravita.model.Mac" %>
+<%@ page import="com.mensubiqua.intravita.dao.MacDAOImpl" %>
 <!DOCTYPE html>
 <html >
 <head>
@@ -11,6 +12,10 @@
     
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
+                                    <%
+                        	Mac m = new Mac();
+					%>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -88,6 +93,7 @@
                                 <i class="fa fa-key"></i>
                             </div>
                         </div>
+                       
                         <div class="form-bottom">
                             <form name='loginForm' role="form" action="${url}/logear" method="post" class="login-form">
                                 <div class="form-group">
@@ -101,7 +107,11 @@
                                 <div class="form-group">
                                 <a href="recuperar">¿Ha olvidado su contraseña?</a>
                                 </div>
-                               <div class="g-recaptcha" id="captchaLogin" data-sitekey="6Lf8FTsUAAAAABXiSOoK3lV-9kIawlM0oe8eYV-e"></div>
+                               
+
+                        	<c:if test = "${dao.find(m)==false}">
+                        	<div class="g-recaptcha" id="captchaLogin" data-sitekey="6Lf8FTsUAAAAABXiSOoK3lV-9kIawlM0oe8eYV-e"></div>
+                        	</c:if>
                                 <button id="form-login" type="submit" name="submit" value="submit" class="btn">Entrar</button>
                             </form>
                         </div>
