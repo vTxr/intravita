@@ -17,8 +17,8 @@ public class LoginConRecuperar {
         driver = Driver.getDriver();
         
         GeneralAux.redirect(root, "/login");
-        GeneralAux.login("prueba", "prueba1234", "");
-        GeneralAux.recuperar("1234", "1234");
+        GeneralAux.login("super.admin", "admin", "");
+        GeneralAux.recuperar("admin", "admin");
         driver.quit();
         
     }

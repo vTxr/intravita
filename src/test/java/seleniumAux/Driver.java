@@ -13,7 +13,7 @@ public class Driver {
     	if (Driver.driver == null)
     	{
     		
-        System.setProperty("webdriver.gecko.driver", "lib/geckodriver");
+        System.setProperty("webdriver.gecko.driver", "lib/geckodriver.exe");
 
     		Driver.driver = new FirefoxDriver();
 

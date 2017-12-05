@@ -7,7 +7,9 @@ import java.security.Principal;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +95,7 @@ public class GeneralController {
     }
     
     @RequestMapping(value = "/login**", method = RequestMethod.GET)
-    public ModelAndView login(HttpServletRequest request, HttpSession sesion) {  
+    public ModelAndView login(HttpServletRequest request, HttpSession sesion, HttpServletResponse response) {  
     	String mensaje = (String) sesion.getAttribute("mensaje");
     	String mensaje2 = (String) sesion.getAttribute("mensaje2");
     	request.getSession().setAttribute("mensaje2", "");
@@ -125,7 +127,9 @@ public class GeneralController {
     	boolean local = request.getRequestURL().toString().contains("localhost");
         url.setUrl(local);
         model.addObject("url", url.getUrl());
-        
+        Cookie cookieCaptcha = new Cookie("cookieCaptchaLogin", "cookieControlCaptchaLogin");
+        cookieCaptcha.setMaxAge(7776000);
+		response.addCookie(cookieCaptcha);
         model.setViewName("login");
         return model;
     }

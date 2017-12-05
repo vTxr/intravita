@@ -109,9 +109,20 @@
                                 </div>
                                
 
-                        	<c:if test = "${dao.find(m)==false}">
+                        	<% boolean mostrarCaptcha = true; 
+									Cookie [] cookies = request.getCookies();
+									if (cookies!=null){
+										for (int i=0; i<cookies.length; i++){
+											Cookie cookie=cookies[i];
+											if (cookie.getName().equals("cookieCaptchaLogin") || cookie.getName().equals("cookieCaptchaRegistro")){
+												mostrarCaptcha = false;
+											}
+										}
+									}
+									if (mostrarCaptcha) { 	%>
+									
                         	<div class="g-recaptcha" id="captchaLogin" data-sitekey="6Lf8FTsUAAAAABXiSOoK3lV-9kIawlM0oe8eYV-e"></div>
-                        	</c:if>
+                        	<% } %>
                                 <button id="form-login" type="submit" name="submit" value="submit" class="btn">Entrar</button>
                             </form>
                         </div>
