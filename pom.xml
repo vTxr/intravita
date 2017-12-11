@@ -226,7 +226,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<apiToken>f3b23e52-f066-4b20-9de2-267946567f68</apiToken>
+					<apiToken>${f3b23e52-f066-4b20-9de2-267946567f68}</apiToken>
 					<failOnSeverity>medium</failOnSeverity>
 					<org></org>
 				</configuration>
