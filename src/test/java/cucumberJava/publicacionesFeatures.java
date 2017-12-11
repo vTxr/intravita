@@ -91,8 +91,8 @@ public class publicacionesFeatures {
 	    daoP.delete(p.getId());
 	}
 
-	@Then("^publicacion \"([^\"]*)\"del usuario \"([^\"]*)\" no existe en bd$")
-	public void publicacion_no_existe_en_bd(String nick, String idPublicacion) throws Throwable {
+	@Then("^publicacion \"([^\"]*)\" del usuario \"([^\"]*)\" no existe en bd$")
+	public void publicacion_no_existe_en_bd(String idPublicacion, String nick ) throws Throwable {
 	    p = null;
 	    p = daoP.findNick(nick);
 	    if (p!=null)
