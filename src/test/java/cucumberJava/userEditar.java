@@ -33,8 +33,8 @@ public class userEditar {
 	private String nick2 = "Miguelnick";
 	private String passNueva = "passwordNueva"; 
 	
-	@Given("^Un usuario registrado en la aplicacion$")
-	public void Un_usuario_registrado_en_la_aplicacion() {
+	@Given("^Un usuario registrado en la aplicacion \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void Un_usuario_registrado_en_la_aplicacion(String nombre, String apellido, String email, String pass, String nick) {
 		usuario = new User(Funciones.encrypt(nombre), Funciones.encrypt(apellido), Funciones.encrypt(email), Funciones.encrypt_md5(pass),
          		"ROLE_USER", Funciones.encrypt(nick) ,false);
 		dao.insert(usuario);
@@ -42,29 +42,29 @@ public class userEditar {
 		
 	}
 
-	@When("^borra cuenta$")
-	public void borra_cuenta() {
+	@When("^borra cuenta \"([^\"]*)\"$")
+	public void borra_cuenta(String nick) {
 	    dao.delete(nick, new File(""));
 	    usuario = null;
 	}
 
-	@Then("^usuario no existe en la base de datos$")
-	public void usuario_no_existe_en_la_base_de_datos() {
+	@Then("^usuario \"([^\"]*)\" no existe en la base de datos$")
+	public void usuario_no_existe_en_la_base_de_datos(String nick) {
 	    usuario = dao.find(Funciones.encrypt(nick));
 	    if(usuario==null) {
 	    	assertTrue(usuario==null);	    	
 		}
 	}
 	
-	@When("^editar informacion$")
-	public void editar_informacion() throws Throwable {
+	@When("^editar informacion \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void editar_informacion(String nombre, String apellido, String email, String pass, String nick, String nick2) throws Throwable {
 	    User u = new User(nombre, apellido, email, pass,
 	             		"ROLE_USER", nick2 ,false);
 	    dao.update(u, "", nick);
 	}
 
-	@Then("^usuario con datos actualizados$")
-	public void usuario_con_datos_actualizados() throws Throwable {
+	@Then("^usuario con datos actualizados \"([^\"]*)\"$")
+	public void usuario_con_datos_actualizados(String nick2) throws Throwable {
 	    usuario = dao.find(Funciones.encrypt(nick2));
 	    if(usuario!=null) {
 	    	assertTrue(usuario!=null);	    	
@@ -72,14 +72,14 @@ public class userEditar {
 	    dao.delete(nick2, new File(""));
 	}
 
-	@When("^inserta nueva password$")
-	public void inserta_nueva_password() throws Throwable {
+	@When("^inserta nueva password \"([^\"]*)\"$")
+	public void inserta_nueva_password(String passNueva) throws Throwable {
 	   usuario.setPassword(Funciones.encrypt_md5(passNueva));
 	   dao.updatePassword(usuario);
 	}
 
-	@Then("^password actualizada$")
-	public void password_actualizada() throws Throwable {
+	@Then("^password \"([^\"]*)\" actualizada \"([^\"]*)\"$")
+	public void password_actualizada(String passNueva, String pass) throws Throwable {
 	    usuario = dao.find(Funciones.encrypt(nick));
 	    String passdb = usuario.getPassword();
 	    if(passdb == Funciones.encrypt_md5(passNueva)) {
@@ -88,13 +88,13 @@ public class userEditar {
 	    dao.delete(nick, new File(""));
 	}
 
-	@When("^cambia rol de usuario$")
-	public void cambia_rol_de_usuario() throws Throwable {
+	@When("^cambia rol de usuario \"([^\"]*)\"$")
+	public void cambia_rol_de_usuario(String nick) throws Throwable {
 	    dao.updateRole(nick, "ROLE_ADMIN");
 	}
 
-	@Then("^rol actualizado$")
-	public void rol_actualizado() throws Throwable {
+	@Then("^rol de \"([^\"]*)\" actualizado$")
+	public void rol_actualizado(String nick) throws Throwable {
 	    usuario = dao.find(Funciones.encrypt(nick));
 	    if("ROLE_ADMIN" == usuario.getRol()) {
 	    	assertTrue("ROLE_ADMIN" == usuario.getRol());
