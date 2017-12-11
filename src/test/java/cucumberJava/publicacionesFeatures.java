@@ -44,102 +44,84 @@ public class publicacionesFeatures {
 	private String texto = "Esto es el texto de la publicacion"; 
 	private String fecha = "2017-11-20 12:27";
 	private String privacidad = "publica";
-	
-	
-	
-	@Given("^Un usuario$")
-	public void un_usuario() throws Throwable {
+
+	@Given("^Un usuario \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void un_usuario(String nombre, String apellido, String email, String pass, String nick) throws Throwable {
 		usuario = new User(Funciones.encrypt(nombre), Funciones.encrypt(apellido), Funciones.encrypt(email), Funciones.encrypt_md5(pass),
          		"ROLE_USER", Funciones.encrypt(nick) ,false);
 		
 	}
 
-	@Given("^escribe publicacion$")
-	public void escribe_publicacion() throws Throwable {
+	@Given("^\"([^\"]*)\" escribe publicacion \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void escribe_publicacion(String idPublicacion, String nick ,String texto, String privacidad, String fecha) throws Throwable {
 	    p.setNickname(nick);
 	    p.setPrivacidad(privacidad);
 	    p.setFecha(fecha);
 	    p.setTexto(texto);
-	}
-
-	@When("^inserta publicacion$")
-	public void inserta_publicacion() throws Throwable {
-	    daoP.insert(p);
-	}
-
-	
-	@Then("^publicacion creada en bd$")
-	public void publicacion_creada_en_bd() throws Throwable {
-		 p = daoP.findNick(nick);	    
-	    	assertTrue(p != null);	   
-	    daoP.delete(p.getId());
+	    p.setTexto(idPublicacion);
 	}
 	
-	@When("^publicacion creada$")
-	public void publicacion_creada() throws Throwable {
+	@Given("^publicacion creada \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void publicacion_creada(String nick ,String texto, String privacidad, String fecha, String idPublicacion) throws Throwable {
 	   p = new Publicacion();
 	   p.setNickname(nick);
 	   p.setPrivacidad(privacidad);
 	   p.setFecha(fecha);
 	   p.setTexto(texto);
+	   p.setId(idPublicacion);
 	   daoP.insert(p);
 	   p = daoP.findNick(nick);
 	}
 
+	@When("^inserta publicacion \"([^\"]*)\"$")
+	public void inserta_publicacion(String idPublicacion) throws Throwable {
+	    daoP.insert(p);
+	}
+
 	
-	@When("^borra publicacion$")
-	public void borra_publicacion() throws Throwable {
+	@Then("^publicacion \"([^\"]*)\" creada en bd por \"([^\"]*)\"$")
+	public void publicacion_creada_en_bd(String nick, String idPublicacion) throws Throwable {
+		p = daoP.findNick(nick);	    
+    	assertTrue(p != null);	   
+    	daoP.delete(p.getId());
+	}
+	
+	@When("^borra publicacion \"([^\"]*)\"$")
+	public void borra_publicacion(String idPublicacion) throws Throwable {
 	    daoP.delete(p.getId());
 	}
 
-	@Then("^publicacion no existe en bd$")
-	public void publicacion_no_existe_en_bd() throws Throwable {
+	@Then("^publicacion \"([^\"]*)\" del usuario \"([^\"]*)\" no existe en bd$")
+	public void publicacion_no_existe_en_bd(String idPublicacion, String nick ) throws Throwable {
 	    p = null;
 	    p = daoP.findNick(nick);
-	    assertTrue(p == null);
-	    
+	    if (p!=null)
+	    	assertTrue(p == null);
+	    p=null;
 	}
 
-	@When("^edita publicacion$")
-	public void edita_publicacion() throws Throwable {
+	@When("^\"([^\"]*)\" edita publicacion \"([^\"]*)\"$")
+	public void edita_publicacion(String privacidad, String nick) throws Throwable {
 	    p.setPrivacidad("privada");
 	    daoP.update(p);
 	}
 
-	@Then("^publicacion modificada$")
-	public void publicacion_modificada() throws Throwable {
-	    p = daoP.findNick(nick);
+	@Then("^publicacion \"([^\"]*)\" modificada por \"([^\"]*)\"$")
+	public void publicacion_modificada(String nick, String idPublicacion) throws Throwable {
+		p = daoP.findNick(nick);
 	    assertTrue("publica"!=p.getPrivacidad());
 	    daoP.delete(p.getId());
 	}
 
-	@Given("^Un usuario \"([^\"]*)\"$")
-	public void un_usuario(String arg1) throws Throwable {
-		usuario = new User(Funciones.encrypt(nombre), Funciones.encrypt(apellido), Funciones.encrypt(email), Funciones.encrypt_md5(pass),
-         		"ROLE_USER", Funciones.encrypt(arg1) ,false);
-		dao.insert(usuario);
-		usuario = dao.find(Funciones.encrypt(arg1));
-		
-	}
-
-	@Given("^publicaciones creadas$")
-	public void publicaciones_creadas() throws Throwable {
-		p = new Publicacion();
-		   p.setNickname(nick);
-		   p.setPrivacidad(privacidad);
-		   p.setFecha(fecha);
-		   p.setTexto(texto);
-		   daoP.insert(p);	
-	}
 
 	@When("^Borra usuario \"([^\"]*)\"$")
-	public void borra_usuario(String arg1) throws Throwable {
-	    dao.delete(arg1, new File(""));
+	public void borra_usuario(String nick) throws Throwable {
+	    dao.delete(nick, new File(""));
 	}
 
 	@Then("^no hay publicaciones de usuario \"([^\"]*)\"$")
-	public void no_hay_publicaciones_de_usuario(String arg1) throws Throwable {
-	    ArrayList <Publicacion> publicaciones = daoP.findAll(arg1);
+	public void no_hay_publicaciones_de_usuario(String nick) throws Throwable {
+	    ArrayList <Publicacion> publicaciones = daoP.findAll(nick);
 	   	assertTrue(publicaciones.isEmpty());
 		}
 	}

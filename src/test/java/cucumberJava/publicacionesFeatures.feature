@@ -5,30 +5,45 @@ En este test se va a desarrollar toda la parte correspondiente al gestion de pub
 editar una publicacion, eliminar una publicacion ya creada y eliminar todas las publicaciones de un usuario eliminado
 
 @Scenario1
-Scenario: crear una nueva publicacion
-	Given Un usuario 
-	And   escribe publicacion
-	When inserta publicacion
-	Then publicacion creada en bd
+Scenario Outline: crear una nueva publicacion
+	Given Un usuario "<nombre>" "<apellido>" "<email>" "<pass>" "<nick>"
+	And   "<nick>" escribe publicacion "<idPublicacion>" "<texto>" "<fecha>" "<privacidad>"
+	When inserta publicacion "<idPublicacion>"
+	Then publicacion "<idPublicacion>" creada en bd por "<nick>"
+
+	Examples: Solicitud enviada
+    |nombre|apellido|email			|pass		|nick		|texto		|fecha		|privacidad		|idPublicacion	|
+    |Miguel|Ampuero |user@email.com	|password	|nickMiguel	|Hola amigos|7-12-2017	|publica		|	001			|
 	
 @Scenario2
-Scenario: borrar una publicacion
-	Given Un usuario 
-	And   publicacion creada
-	When borra publicacion
-	Then publicacion no existe en bd
+Scenario Outline: borrar una publicacion
+	Given Un usuario "<nombre>" "<apellido>" "<email>" "<pass>" "<nick>"
+	And   publicacion creada "<idPublicacion>" "<texto>" "<fecha>" "<privacidad>" "<nick>"
+	When borra publicacion "<idPublicacion>"
+	Then publicacion "<idPublicacion>" del usuario "<nick>" no existe en bd
+
+	Examples: Solicitud enviada
+    |nombre|apellido|email			|pass		|nick		|texto		|fecha		|privacidad		|idPublicacion	|
+    |Miguel|Ampuero |user@email.com	|password	|nickMiguel	|Hola amigos|7-12-2017	|publica		|	001			|
 	
 @Scenario3
-Scenario: editar una publicacion
-	Given Un usuario 
-	And   publicacion creada
-	When edita publicacion
-	Then publicacion modificada
-	
+Scenario Outline: editar una publicacion
+	Given Un usuario "<nombre>" "<apellido>" "<email>" "<pass>" "<nick>"
+	And   publicacion creada "<idPublicacion>" "<texto>" "<fecha>" "<privacidad>" "<nick>"
+	When "<nick>" edita publicacion "<idPublicacion>"
+	Then publicacion "<idPublicacion>" modificada por "<nick>"
+
+	Examples: Solicitud enviada
+    |nombre|apellido|email			|pass		|nick		|texto				|fecha		|privacidad		|idPublicacion	|
+    |Miguel|Ampuero |user@email.com	|password	|nickMiguel	|Hola amigos que tal|9-12-2017	|privada		|	001			|	
 
 @Scenario4
-Scenario: eliminar publicaciones de un usuario eliminado
-	Given Un usuario "pepe"
-	And publicaciones creadas
-	When Borra usuario "pepe"
-	Then no hay publicaciones de usuario "pepe"
+Scenario Outline: eliminar publicaciones de un usuario eliminado
+	Given Un usuario "<nombre>" "<apellido>" "<email>" "<pass>" "<nick>"
+	And publicacion creada "<idPublicacion>" "<texto>" "<fecha>" "<privacidad>" "<nick>"
+	When Borra usuario "<nick>"
+	Then no hay publicaciones de usuario "<nick>"
+
+	Examples: Solicitud enviada
+    |nombre|apellido|email			|pass		|nick		|texto				|fecha		|privacidad		|idPublicacion	|
+    |Miguel|Ampuero |user@email.com	|password	|nickMiguel	|Hola amigos que tal|9-12-2017	|privada		|	001			|

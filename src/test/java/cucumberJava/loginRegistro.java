@@ -27,15 +27,9 @@ public class loginRegistro {
 	private User usuario;
 	private UserDAOImpl dao = new UserDAOImpl();;
 	
-	private String nombre = "Miguel";
-	private String apellido = "Ampuero";
-	private String email = "user@email.com";
-	private String pass = "password";
-	private String nick = "nickMiguel";
-	private String pass2 = "password2";
-	
-	@Given("^Un nuevo usuario inserta sus datos$")
-	public void Un_nuevo_usuario_inserta_sus_datos() {
+	//escenario 1
+	@Given("^Un nuevo usuario inserta sus datos \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void Un_nuevo_usuario_inserta_sus_datos(String nombre, String apellido, String email, String pass, String nick) {
 		
 		
 		 usuario = new User(Funciones.encrypt(nombre), Funciones.encrypt(apellido), Funciones.encrypt(email), Funciones.encrypt_md5(pass),
@@ -44,8 +38,8 @@ public class loginRegistro {
 	    
 	}
 
-	@When("^se comprueba en la bbdd$")
-	public void se_comprueba_en_la_bbdd() {
+	@When("^se comprueba en la bbdd \"([^\"]*)\"$")
+	public void se_comprueba_en_la_bbdd(String nick) {
 		User u = null;
 		dao.find(Funciones.encrypt(nick));
 		if(u == null){
@@ -54,8 +48,8 @@ public class loginRegistro {
 	    
 	}
 
-	@Then("^usuario creado$")
-	public void usuario_creado() {
+	@Then("^usuario \"([^\"]*)\" creado$")
+	public void usuario_creado(String nick) {
 		usuario = null;
 	    usuario = dao.find(Funciones.encrypt(nick));
 	    if(usuario!=null)
@@ -64,72 +58,79 @@ public class loginRegistro {
 	    usuario = null;
 	}
 	
-	@Given("^Un usuario inserta sus datos$")
-	public void Un_usuario_inserta_sus_datos() {
+	//escenario 2
+	@Given("^Un usuario inserta sus datos \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
+	public void Un_usuario_inserta_sus_datos(String nombre, String apellido, String email, String pass, String pass2, String nick) {
 	    usuario = new User(nombre, apellido, email, pass, "ROLE_USER", nick, false);
 	}
 
-	@When("^buscar que no exista$")
-	public void buscar_que_no_exista() {
+	@When("^buscar que \"([^\"]*)\" no exista$")
+	public void buscar_que_no_exista(String nick) {
 		usuario= null;
 		usuario = dao.find(Funciones.encrypt(nick));		
 	}
 
-	@Then("^usuario no registrado$")
-	public void usuario_no_registrado() {
+	@Then("^usuario no registrado, \"([^\"]*)\" ya existe$")
+	public void usuario_no_registrado(String nick) {
 		if(usuario==null) {
 	    	assertTrue(usuario==null);	    	
 		}
-}
-	    
-	@When("^password no coinciden$")
-	public void password_no_coinciden() {
+	}
+	//escenario 3   
+	@When("^Las passwords \"([^\"]*)\" y \"([^\"]*)\" no coinciden$")
+	public void password_no_coinciden(String pass, String pass2) {
 	    if(usuario.getPassword() != pass2) {
 	    	usuario = null;
 	    }
 	}
+	
+	@Then("^usuario \"([^\"]*)\" no registrado, passwords no coinciden$")
+	public void usuario_no_registrado_passwords_no_coinciden(String nick) {
+		if(usuario==null) {
+	    	assertTrue(usuario==null);	    	
+		}
+	}
 
-
-	@Given("^nickname y pass$")
-	public void nickname_y_pass() {
+	//escenario 4
+	@Given("^Introducimos nickname \"([^\"]*)\" y pass \"([^\"]*)\"$")
+	public void introducimos_nickname_y_pass(String nick, String pass) {
 	    usuario = null;
 	}
 
-	@When("^ya esta registrado$")
-	public void ya_esta_registrado() {
+	@When("^El usuario \"([^\"]*)\" ya esta registrado$")
+	public void el_usuario_ya_esta_registrado(String nick) {
 	    usuario = dao.find(Funciones.encrypt(nick));
 	}
 
-	@Then("^acceso permitido$")
-	public void acceso_permitido() {
+	@Then("^Acceso permitido, estas dentro de intravita \"([^\"]*)\"$")
+	public void acceso_permitido_estas_dentro_de_intravita(String nick) {
 		if(usuario!=null)
 	    	assertTrue(usuario != null);
 	}
 
-	@Given("^nickname y password$")
-	public void nickname_y_password() {
-	    usuario =null;
-	    
+	//escenario 5
+	@Given("^Introducimos nickname \"([^\"]*)\" y password \"([^\"]*)\"$")
+	public void introducimos_nickname_y_password(String nick, String pass) {
+	    usuario = null;
 	}
 
-	@When("^password incorrecta$")
-	public void password_incorrecta() {
+	@When("^\"([^\"]*)\" tu password \"([^\"]*)\" incorrecta$")
+	public void password_incorrecta(String nick, String pass){
 		usuario = dao.find(Funciones.encrypt(nick));
-	    if(usuario.getPassword() != Funciones.encrypt_md5(pass2)){
+	    if(usuario.getPassword() != Funciones.encrypt_md5(pass)){
 	    	usuario = null;
 	    }
 	    dao.delete(nick, new File(""));
 	}
 
-	@Then("^acceso denegado$")
-	public void acceso_denegado() {
+	@Then("^\"([^\"]*)\" acceso denegado$")
+	public void acceso_denegado(String nick) {
 		if(usuario==null) {
 	    	assertTrue(usuario==null);	    	
 		}
 	}
-
-	@When("^usuario no registro$")
-	public void usuario_no_registro() {
+	@When("^usuario \"([^\"]*)\" no registrado$")
+	public void usuario_no_registro(String nick) {
 		usuario = dao.find(Funciones.encrypt(nick));
 	}
 
