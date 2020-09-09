@@ -10,7 +10,7 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
-		<spring.version>5.0.0.RELEASE</spring.version>
+		<spring.version>5.0.16.RELEASE</spring.version>
 		<jstl.version>1.2</jstl.version>
 		<cucumber.version>1.2.5</cucumber.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -228,7 +228,7 @@
 				<configuration>
 					<apiToken>${f3b23e52-f066-4b20-9de2-267946567f68}</apiToken>
 					<failOnSeverity>medium</failOnSeverity>
-					<org></org>
+					<org/>
 				</configuration>
 			</plugin>
 		</plugins>
