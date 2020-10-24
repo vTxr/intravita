@@ -96,7 +96,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.47.1</version>
+			<version>3.6.0</version>
 		</dependency>
 
 		<dependency>
@@ -228,7 +228,7 @@
 				<configuration>
 					<apiToken>${f3b23e52-f066-4b20-9de2-267946567f68}</apiToken>
 					<failOnSeverity>medium</failOnSeverity>
-					<org></org>
+					<org/>
 				</configuration>
 			</plugin>
 		</plugins>
